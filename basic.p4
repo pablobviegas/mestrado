@@ -159,7 +159,9 @@ control MyIngress(inout headers hdr,
 
 // Calculate distance vector 0
     table tdist0{
-        key = {  standard_metadata.pkt_len++hdr.ipv4.protocol++hdr.ipv4.flags++hdr.tcp.srcPort++hdr.tcp.dstPort:ternary @name("features"); }
+        //key = {  standard_metadata.pkt_len++hdr.ipv4.protocol++hdr.ipv4.flags++hdr.tcp.srcPort++hdr.tcp.dstPort:ternary @name("features"); }
+        key = {  hdr.ipv4.protocol++hdr.ipv4.flags++hdr.tcp.srcPort++hdr.tcp.dstPort:ternary @name("features"); }
+        
 
          actions = {
             set_dist0;
@@ -171,7 +173,8 @@ control MyIngress(inout headers hdr,
 
 // Calculate distance vector 1
     table tdist1{
-        key = {  standard_metadata.pkt_len++hdr.ipv4.protocol++hdr.ipv4.flags++hdr.tcp.srcPort++hdr.tcp.dstPort:ternary @name("features"); }
+        //key = {  standard_metadata.pkt_len++hdr.ipv4.protocol++hdr.ipv4.flags++hdr.tcp.srcPort++hdr.tcp.dstPort:ternary @name("features"); }
+        key = {  hdr.ipv4.protocol++hdr.ipv4.flags++hdr.tcp.srcPort++hdr.tcp.dstPort:ternary @name("features"); }
 
          actions = {
             set_dist1;
@@ -183,7 +186,8 @@ control MyIngress(inout headers hdr,
 
 // Calculate distance vector 2
   table tdist2 {
-         key = {  standard_metadata.pkt_len++hdr.ipv4.protocol++hdr.ipv4.flags++hdr.tcp.srcPort++hdr.tcp.dstPort:ternary @name("features"); }
+         //key = {  standard_metadata.pkt_len++hdr.ipv4.protocol++hdr.ipv4.flags++hdr.tcp.srcPort++hdr.tcp.dstPort:ternary @name("features"); }
+         key = {  hdr.ipv4.protocol++hdr.ipv4.flags++hdr.tcp.srcPort++hdr.tcp.dstPort:ternary @name("features"); }
         
          actions = {
             set_dist2;
@@ -195,8 +199,8 @@ control MyIngress(inout headers hdr,
 
 // Calculate distance vector 3
   table tdist3 {
-
-         key = {  standard_metadata.pkt_len++hdr.ipv4.protocol++hdr.ipv4.flags++hdr.tcp.srcPort++hdr.tcp.dstPort:ternary @name("features"); }
+         //key = {  standard_metadata.pkt_len++hdr.ipv4.protocol++hdr.ipv4.flags++hdr.tcp.srcPort++hdr.tcp.dstPort:ternary @name("features"); }
+         key = {  hdr.ipv4.protocol++hdr.ipv4.flags++hdr.tcp.srcPort++hdr.tcp.dstPort:ternary @name("features"); }
 
          actions = {
             set_dist3;
@@ -208,7 +212,8 @@ control MyIngress(inout headers hdr,
 
 // Calculate distance vector 4
   table tdist4{
-         key = {  standard_metadata.pkt_len++hdr.ipv4.protocol++hdr.ipv4.flags++hdr.tcp.srcPort++hdr.tcp.dstPort:ternary @name("features"); }
+         //key = {  standard_metadata.pkt_len++hdr.ipv4.protocol++hdr.ipv4.flags++hdr.tcp.srcPort++hdr.tcp.dstPort:ternary @name("features"); }
+         key = {  hdr.ipv4.protocol++hdr.ipv4.flags++hdr.tcp.srcPort++hdr.tcp.dstPort:ternary @name("features"); }
 
          actions = {
             set_dist4;
@@ -236,23 +241,28 @@ control MyIngress(inout headers hdr,
 //Select the destination port based on the classification - shortest distance
 
         if ((meta.dist0<meta.dist1) && (meta.dist0<meta.dist2) && (meta.dist0<meta.dist3) && (meta.dist0<meta.dist4)) {
-            standard_metadata.dst_port = 8w0b00000001;
+            //standard_metadata.dst_port = 8w0b00000001;
+            standard_metadata.egress_port = 1;
         }
         else{
           if ((meta.dist1<=meta.dist0) && (meta.dist1<meta.dist2) && (meta.dist1<meta.dist3) && (meta.dist1<meta.dist4)) {
-              standard_metadata.dst_port = 8w0b00000100;
+              //standard_metadata.dst_port = 8w0b00000100;
+              standard_metadata.egress_port = 2;
           }
           else{
             if ((meta.dist2<=meta.dist0) && (meta.dist2<=meta.dist1) && (meta.dist2<meta.dist3) && (meta.dist2<meta.dist4)) {
-                standard_metadata.dst_port = 8w0b00010000;
+                //standard_metadata.dst_port = 8w0b00010000;
+                standard_metadata.egress_port = 3;
             }
             else{
               if ((meta.dist3<=meta.dist0) && (meta.dist3<=meta.dist1) && (meta.dist3<=meta.dist2) && (meta.dist3<meta.dist4)) {
-                  standard_metadata.dst_port = 8w0b01000000;
+                  //standard_metadata.dst_port = 8w0b01000000;
+                  standard_metadata.egress_port = 4;
               }
               else
               {
-                    standard_metadata.dst_port = 8w0b00000010; //send to host
+                    //standard_metadata.dst_port = 8w0b00000010; //send to host
+                    standard_metadata.egress_port = 5;
               }  
             } 
             } 
