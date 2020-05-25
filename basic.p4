@@ -160,7 +160,7 @@ control MyIngress(inout headers hdr,
 // Calculate distance vector 0
     table tdist0{
         //key = {  standard_metadata.pkt_len++hdr.ipv4.protocol++hdr.ipv4.flags++hdr.tcp.srcPort++hdr.tcp.dstPort:ternary @name("features"); }
-        key = {  hdr.ipv4.protocol++hdr.ipv4.flags++hdr.tcp.srcPort++hdr.tcp.dstPort:ternary @name("features"); }
+        key = {  hdr.ipv4.dstAddr++hdr.ipv4.flags:lpm @name("features"); }
         
 
          actions = {
@@ -174,7 +174,7 @@ control MyIngress(inout headers hdr,
 // Calculate distance vector 1
     table tdist1{
         //key = {  standard_metadata.pkt_len++hdr.ipv4.protocol++hdr.ipv4.flags++hdr.tcp.srcPort++hdr.tcp.dstPort:ternary @name("features"); }
-        key = {  hdr.ipv4.protocol++hdr.ipv4.flags++hdr.tcp.srcPort++hdr.tcp.dstPort:ternary @name("features"); }
+        key = {  hdr.ipv4.dstAddr++hdr.ipv4.flags:lpm @name("features"); }
 
          actions = {
             set_dist1;
@@ -187,7 +187,7 @@ control MyIngress(inout headers hdr,
 // Calculate distance vector 2
   table tdist2 {
          //key = {  standard_metadata.pkt_len++hdr.ipv4.protocol++hdr.ipv4.flags++hdr.tcp.srcPort++hdr.tcp.dstPort:ternary @name("features"); }
-         key = {  hdr.ipv4.protocol++hdr.ipv4.flags++hdr.tcp.srcPort++hdr.tcp.dstPort:ternary @name("features"); }
+         key = {  hdr.ipv4.dstAddr++hdr.ipv4.flags:lpm @name("features"); }
         
          actions = {
             set_dist2;
@@ -200,7 +200,7 @@ control MyIngress(inout headers hdr,
 // Calculate distance vector 3
   table tdist3 {
          //key = {  standard_metadata.pkt_len++hdr.ipv4.protocol++hdr.ipv4.flags++hdr.tcp.srcPort++hdr.tcp.dstPort:ternary @name("features"); }
-         key = {  hdr.ipv4.protocol++hdr.ipv4.flags++hdr.tcp.srcPort++hdr.tcp.dstPort:ternary @name("features"); }
+         key = {  hdr.ipv4.dstAddr++hdr.ipv4.flags:lpm @name("features"); }
 
          actions = {
             set_dist3;
@@ -213,7 +213,7 @@ control MyIngress(inout headers hdr,
 // Calculate distance vector 4
   table tdist4{
          //key = {  standard_metadata.pkt_len++hdr.ipv4.protocol++hdr.ipv4.flags++hdr.tcp.srcPort++hdr.tcp.dstPort:ternary @name("features"); }
-         key = {  hdr.ipv4.protocol++hdr.ipv4.flags++hdr.tcp.srcPort++hdr.tcp.dstPort:ternary @name("features"); }
+         key = {  hdr.ipv4.dstAddr++hdr.ipv4.flags:lpm @name("features"); }
 
          actions = {
             set_dist4;
