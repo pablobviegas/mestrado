@@ -242,27 +242,27 @@ control MyIngress(inout headers hdr,
 
         if ((meta.dist0<meta.dist1) && (meta.dist0<meta.dist2) && (meta.dist0<meta.dist3) && (meta.dist0<meta.dist4)) {
             //standard_metadata.dst_port = 8w0b00000001;
-            standard_metadata.egress_port = 1;
+            standard_metadata.egress_port = 8w0b00000001;
         }
         else{
           if ((meta.dist1<=meta.dist0) && (meta.dist1<meta.dist2) && (meta.dist1<meta.dist3) && (meta.dist1<meta.dist4)) {
               //standard_metadata.dst_port = 8w0b00000100;
-              standard_metadata.egress_port = 2;
+              standard_metadata.egress_port = 8w0b00000100;
           }
           else{
             if ((meta.dist2<=meta.dist0) && (meta.dist2<=meta.dist1) && (meta.dist2<meta.dist3) && (meta.dist2<meta.dist4)) {
                 //standard_metadata.dst_port = 8w0b00010000;
-                standard_metadata.egress_port = 3;
+                standard_metadata.egress_port = 8w0b00010000;
             }
             else{
               if ((meta.dist3<=meta.dist0) && (meta.dist3<=meta.dist1) && (meta.dist3<=meta.dist2) && (meta.dist3<meta.dist4)) {
                   //standard_metadata.dst_port = 8w0b01000000;
-                  standard_metadata.egress_port = 4;
+                  standard_metadata.egress_port = 8w0b01000000;
               }
               else
               {
                     //standard_metadata.dst_port = 8w0b00000010; //send to host
-                    standard_metadata.egress_port = 5;
+                    standard_metadata.egress_port = 8w0b00000010;
               }  
             } 
             } 

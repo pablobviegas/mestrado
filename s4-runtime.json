@@ -12,7 +12,7 @@
     {
       "table": "MyIngress.tdist3",
       "match": {
-        "hdr.ipv4.dstAddr": ["10.0.1.1", 32]
+        "features": ["10.0.1.1", 32]
       },
       "action_name": "MyIngress.set_dist3",
       "action_params": {
